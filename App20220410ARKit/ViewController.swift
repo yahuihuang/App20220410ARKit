@@ -23,11 +23,34 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+//        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene()
         
         sceneView.debugOptions = [.showWorldOrigin, .showFeaturePoints]
         // Set the scene to the view
         sceneView.scene = scene
+        
+        // ADD Box
+        let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.03)
+        let material = SCNMaterial() //新增材質
+//        material.diffuse.contents = UIColor.red //材質內容為紅色
+        let image = UIImage(named: "myImage")
+        material.diffuse.contents = image
+        
+        box.materials = [material] //把 box 的貼圖材質加進去
+        let node = SCNNode(geometry: box) //新增一個 Box
+        node.position = SCNVector3(0, 0, -0.5) //設定 node 在空間的位置
+        sceneView.scene.rootNode.addChildNode(node) //把 node 加入到目前的 scene 上
+        
+        // 文字
+        let text = SCNText(string: "您好，我是Grace", extrusionDepth: 1.0)
+        text.firstMaterial?.diffuse.contents = UIColor.blue
+        let textNode = SCNNode(geometry: text)
+        textNode.position = SCNVector3(0, 0.05, -0.5)
+        textNode.scale = SCNVector3(0.01, 0.01, 0.01)
+        sceneView.scene.rootNode.addChildNode(textNode)
+         
+         
     }
     
     override func viewWillAppear(_ animated: Bool) {
