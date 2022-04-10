@@ -43,13 +43,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene.rootNode.addChildNode(node) //把 node 加入到目前的 scene 上
         
         // 文字
-        let text = SCNText(string: "您好，我是Grace", extrusionDepth: 1.0)
-        text.firstMaterial?.diffuse.contents = UIColor.blue
+        let text = SCNText(string: "您好，我是Grace", extrusionDepth: 0.1)
+        text.firstMaterial?.diffuse.contents = UIColor.lightGray
         let textNode = SCNNode(geometry: text)
         textNode.position = SCNVector3(0, 0.05, -0.5)
         textNode.scale = SCNVector3(0.01, 0.01, 0.01)
         sceneView.scene.rootNode.addChildNode(textNode)
          
+        // Map
+        let earth = SCNSphere(radius: 0.3)
+        earth.firstMaterial?.diffuse.contents = UIImage(named: "worldmap")
+        let earthNode = SCNNode(geometry: earth)
+        earthNode.position = SCNVector3(0, 0, -0.5)
+        sceneView.scene.rootNode.addChildNode(earthNode)
          
     }
     
