@@ -54,9 +54,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let earth = SCNSphere(radius: 0.3)
         earth.firstMaterial?.diffuse.contents = UIImage(named: "worldmap")
         let earthNode = SCNNode(geometry: earth)
-        earthNode.position = SCNVector3(0, 0, -0.5)
+        earthNode.position = SCNVector3(0, 0, -1.5)
         sceneView.scene.rootNode.addChildNode(earthNode)
          
+        // 先加入一個手勢感應器到場景中
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(taped(sender:)))
+        sceneView.addGestureRecognizer(gesture)
+    }
+    
+    // MARK: 當點擊手勢發生時，試試看有沒有點到東西
+    @objc func taped(sender:UIGestureRecognizer){
+        let view = sender.view as! SCNView //由傳送者取得 ARView 的實體
+        let location = sender.location(in: view) //取得點選的畫面座標
+        let hitResult = view.hitTest(location, options: nil) //試試看能不能點到東西
+        if hitResult.isEmpty != true{
+            print("some thing!")
+        } else {
+            print("nothing!")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
